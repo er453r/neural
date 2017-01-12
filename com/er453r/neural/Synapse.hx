@@ -10,6 +10,6 @@ class Synapse {
 		this.input = input;
 		this.output = output;
 
-		this.weight = Math.random();
+		this.weight = 2 * Math.random() - 1;
 	}
 }

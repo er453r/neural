@@ -5,12 +5,26 @@ class Neuron {
 	private var outputs:Array<Synapse> = [];
 
 	public var value:Float = 0;
+	public var fired:Float = 0;
 
 	public function new() {
-		value = Math.random();
+
 	}
 
 	public function addInput(neuron:Neuron){
 		inputs.push(new Synapse(neuron, this));
+	}
+
+	public function fire(){
+		fired = 0;
+
+		for(input in inputs)
+			fired += input.input.value * input.weight;
+
+		fired /= inputs.length;
+	}
+
+	public function propagate(){
+		value = fired;
 	}
 }
