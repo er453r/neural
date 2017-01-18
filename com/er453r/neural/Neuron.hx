@@ -1,16 +1,20 @@
 package com.er453r.neural;
 
+import com.er453r.neural.activations.Activation;
+
 class Neuron {
-	private var inputs:Array<Synapse> = [];
+	public var inputs:Array<Synapse> = [];
 	private var outputs:Array<Synapse> = [];
 
 	public var value:Float = 0;
 	public var fired:Float = 0;
 
-	private var beta:Float = 1;
+	private var activation:Activation;
 
-	public function new() {
+	public function new(activation:Activation) {
+		this.activation = activation;
 
+		activation.attach(this);
 	}
 
 	public function addInput(neuron:Neuron){
@@ -18,19 +22,10 @@ class Neuron {
 	}
 
 	public function fire(){
-		fired = 0;
-
-		for(input in inputs)
-			fired += input.input.value * input.weight;
-
-		fired = sigmoid(fired);
+		fired = activation.fire();
 	}
 
 	public function propagate(){
 		value = fired;
-	}
-
-	private function sigmoid(x:Float){
-		return (2 / (1 + Math.exp(-(beta * x)))) - 1;
 	}
 }
