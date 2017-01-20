@@ -17,14 +17,17 @@ class Neuron {
 		activation.attach(this);
 	}
 
-	public function addInput(neuron:Neuron){
-		inputs.push(new Synapse(neuron, this));
+	public function addInput(neuron:Neuron, weight:Float){
+		inputs.push(new Synapse(neuron, this, weight));
 	}
 
 	public function fire(){
-		fired = activation.fire();
+		if(value < 0.01)
+			fired = activation.fire();
+		else
+			fired = value * 0.9;
 	}
-
+	
 	public function propagate(){
 		value = fired;
 	}
