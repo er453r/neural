@@ -10,4 +10,8 @@ class Synapse {
 		this.output = output;
 		this.weight = weight;
 	}
+
+	public function getValue():Float{
+		return input.value * weight;
+	}
 }

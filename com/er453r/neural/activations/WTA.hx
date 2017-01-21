@@ -15,9 +15,12 @@ class WTA implements Activation{
 	public function fire():Float{
 		var max:Float = 0;
 
-		for(input in neuron.inputs)
-			if(max < input.input.value)
-				max = input.input.value;
+		for(input in neuron.inputs){
+			var value:Float = input.getValue()
+			;
+			if(max < value)
+				max = value;
+		}
 
 		return max;
 	}
