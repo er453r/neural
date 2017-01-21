@@ -5,7 +5,7 @@ class Synapse {
 	public var output:Neuron;
 	public var weight:Float;
 
-	public function new(input:Neuron, output:Neuron, weight:Float) {
+	public function new(input:Neuron, output:Neuron, weight:Float = 0) {
 		this.input = input;
 		this.output = output;
 		this.weight = weight;

@@ -1,9 +1,9 @@
 package com.er453r.neural.nets;
 
-import com.er453r.neural.activations.WTA;
+import com.er453r.neural.mutators.PositiveWeights;
 import haxe.ds.Vector;
 
-import com.er453r.neural.activations.Sigmoid;
+import com.er453r.neural.mutators.WTA;
 
 class FlatNet implements Network {
 	private var neurons:Vector<Neuron>;
@@ -21,7 +21,7 @@ class FlatNet implements Network {
 		neurons = new Vector<Neuron>(width * height);
 
 		for(n in 0...neurons.length)
-			neurons[n] = new Neuron(new WTA());
+			neurons[n] = new Neuron([new WTA(), new PositiveWeights()]);
 
 		for(n in 0...neurons.length){
 			var neuron:Neuron = neurons[n];
@@ -38,7 +38,7 @@ class FlatNet implements Network {
 			for(y_ in startY...endY)
 				for(x_ in startX...endX)
 					if(y_ != y || x_ != x)
-						neuron.addInput(neurons[y_ * width + x_], Math.random());
+						neuron.addInput(neurons[y_ * width + x_]);
 		}
 	}
 
@@ -52,7 +52,7 @@ class FlatNet implements Network {
 		neurons[inputIndex].value = 1;
 
 		for(neuron in neurons)
-			neuron.fire();
+			neuron.step();
 
 		for(neuron in neurons)
 			neuron.propagate();
