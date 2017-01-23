@@ -1,5 +1,6 @@
 package com.er453r.neural.nets;
 
+import com.er453r.neural.mutators.LearningWTA;
 import com.er453r.neural.mutators.Decay;
 import com.er453r.neural.mutators.PositiveWeights;
 import haxe.ds.Vector;
@@ -22,7 +23,12 @@ class FlatNet implements Network {
 		neurons = new Vector<Neuron>(width * height);
 
 		for(n in 0...neurons.length)
-			neurons[n] = new Neuron([new WTA(), new Decay(), new PositiveWeights()]);
+			neurons[n] = new Neuron([
+				new WTA(),
+				new Decay(),
+				new PositiveWeights(),
+				new LearningWTA()
+			]);
 
 		for(n in 0...neurons.length){
 			var neuron:Neuron = neurons[n];

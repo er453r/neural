@@ -8,6 +8,7 @@ class Neuron {
 	public var value:Float = 0;
 	public var fired:Float = 0;
 
+	public var learn:Float = 0;
 	public var learning:Float = 0;
 
 	public function new(mutators:Array<NeuronMutator>) {
@@ -33,5 +34,6 @@ class Neuron {
 	
 	public function propagate(){
 		value = fired;
+		learning = learn;
 	}
 }
