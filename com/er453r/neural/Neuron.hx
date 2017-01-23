@@ -3,11 +3,12 @@ package com.er453r.neural;
 class Neuron {
 	public var inputs:Array<Synapse> = [];
 
-	private var outputs:Array<Synapse> = [];
 	private var mutators:Array<NeuronMutator>;
 
 	public var value:Float = 0;
 	public var fired:Float = 0;
+
+	public var learning:Float = 0;
 
 	public function new(mutators:Array<NeuronMutator>) {
 		this.mutators = mutators;

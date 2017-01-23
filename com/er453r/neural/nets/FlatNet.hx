@@ -49,8 +49,10 @@ class FlatNet implements Network {
 
 	public function update():Void{
 		var inputIndex:UInt = Std.int(height / 2) * width + Std.int(width / 4);
+		var outputIndex:UInt = Std.int(height / 2) * width + Std.int(3 * width / 4);
 
 		neurons[inputIndex].value = 1;
+		neurons[outputIndex].learning = 1;
 
 		for(neuron in neurons)
 			neuron.step();
@@ -59,5 +61,6 @@ class FlatNet implements Network {
 			neuron.propagate();
 
 		neurons[inputIndex].value = 1;
+		neurons[outputIndex].learning = 1;
 	}
 }
