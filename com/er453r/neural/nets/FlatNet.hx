@@ -1,5 +1,6 @@
 package com.er453r.neural.nets;
 
+import haxe.Timer;
 import com.er453r.neural.mutators.LearningWTA;
 import com.er453r.neural.mutators.Decay;
 import com.er453r.neural.mutators.PositiveWeights;
@@ -19,6 +20,8 @@ class FlatNet implements Network {
 		this.width = width;
 		this.height = height;
 		this.d = d;
+
+		var past:Float = Timer.stamp();
 
 		neurons = new Vector<Neuron>(width * height);
 
@@ -47,6 +50,22 @@ class FlatNet implements Network {
 					if(y_ != y || x_ != x)
 						neuron.addInput(neurons[y_ * width + x_]);
 		}
+
+		var forwardTime:Float = Timer.stamp() - past;
+		past = Timer.stamp();
+
+		for(n in 0...neurons.length){
+			var neuron:Neuron = neurons[n];
+
+			for(neighbour in neuron.inputs)
+				for(neighbourInput in neighbour.input.inputs)
+					if(neighbourInput.input == neuron)
+						neuron.outputs.push(neighbourInput);
+		}
+
+		var reverseTime:Float = Timer.stamp() - past;
+
+		trace('Created forward in ${1000 * forwardTime} ms., reverse in ${1000 * reverseTime} ms.');
 	}
 
 	public function getNeurons():Vector<Neuron>{

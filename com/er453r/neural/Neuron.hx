@@ -2,6 +2,7 @@ package com.er453r.neural;
 
 class Neuron {
 	public var inputs:Array<Synapse> = [];
+	public var outputs:Array<Synapse> = [];
 
 	private var mutators:Array<NeuronMutator>;
 
