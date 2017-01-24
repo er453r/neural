@@ -8,10 +8,28 @@ class LearningWTA extends NeuronMutator{
 	}
 
 	override public function onStep(neuron:Neuron){
+		// weight modificaiton propagation
 		var max:Float = 0;
+		var maxInput:Synapse = neuron.inputs[0];
 
 		for(input in neuron.inputs){
-			var value:Float = input.input.learning * neuron.value;
+			var value:Float = input.getValue();
+
+			if(max < value){
+				max = value;
+				maxInput = input;
+			}
+		}
+
+		maxInput.weight += neuron.learning * neuron.value;
+
+		maxInput.weight = maxInput.weight > 1 ? 1 : maxInput.weight;
+
+		// learing signal propagation
+		max = 0;
+
+		for(output in neuron.outputs){
+			var value:Float = output.output.learning * output.weight;
 
 			if(max < value)
 				max = value;
