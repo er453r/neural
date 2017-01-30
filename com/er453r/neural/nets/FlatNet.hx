@@ -1,5 +1,6 @@
 package com.er453r.neural.nets;
 
+import com.er453r.neural.mutators.ReinforcementWTALearning;
 import haxe.Timer;
 import com.er453r.neural.mutators.LearningWTA;
 import com.er453r.neural.mutators.Decay;
@@ -28,9 +29,9 @@ class FlatNet implements Network {
 		for(n in 0...neurons.length)
 			neurons[n] = new Neuron([
 				new WTA(),
-				new Decay(0.001),
+				new Decay(0.000001),
 				new PositiveWeights(),
-				new LearningWTA()
+				new ReinforcementWTALearning()
 			]);
 
 		for(n in 0...neurons.length){
@@ -77,7 +78,7 @@ class FlatNet implements Network {
 		var outputIndex:UInt = Std.int(height / 2) * width + Std.int(3 * width / 4);
 
 		neurons[inputIndex].value = 1;
-		neurons[outputIndex].learning = 1;
+		neurons[inputIndex].learning = neurons[outputIndex].value;
 
 		for(neuron in neurons)
 			neuron.step();
@@ -86,6 +87,5 @@ class FlatNet implements Network {
 			neuron.propagate();
 
 		neurons[inputIndex].value = 1;
-		neurons[outputIndex].learning = 1;
 	}
 }
