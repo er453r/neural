@@ -28,7 +28,7 @@ class FlatNet implements Network {
 		for(n in 0...neurons.length)
 			neurons[n] = new Neuron([
 				new WTA(),
-				new Decay(),
+				new Decay(0.001),
 				new PositiveWeights(),
 				new LearningWTA()
 			]);
