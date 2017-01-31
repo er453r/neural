@@ -17,9 +17,9 @@ class ReinforcementWTALearning extends NeuronMutator{
 			}
 		}
 
-		maxInput.weight += neuron.learning;
+		maxInput.weight += neuron.learning * neuron.value * 1000000;
 		maxInput.weight = maxInput.weight > 1 ? 1 : maxInput.weight;
 
-		neuron.learn = maxInput.input.learning;
+		neuron.learn = maxInput.input.learning * maxInput.weight;
 	}
 }
