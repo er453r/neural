@@ -87,5 +87,6 @@ class FlatNet implements Network {
 			neuron.propagate();
 
 		neurons[inputIndex].value = 1;
+		neurons[inputIndex].learning = neurons[outputIndex].value;
 	}
 }
