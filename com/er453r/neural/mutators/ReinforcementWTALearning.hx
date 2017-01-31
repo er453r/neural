@@ -1,11 +1,7 @@
 package com.er453r.neural.mutators;
 
 class ReinforcementWTALearning extends NeuronMutator{
-	private var treshold:Float;
-
-	public function new(treshold:Float = 0.000001){
-		this.treshold = treshold;
-	}
+	public function new(){}
 
 	override public function onStep(neuron:Neuron){
 		// weight modificaiton propagation
@@ -21,9 +17,9 @@ class ReinforcementWTALearning extends NeuronMutator{
 			}
 		}
 
-		maxInput.weight += neuron.learning * neuron.value;
+		maxInput.weight += neuron.learning;
 		maxInput.weight = maxInput.weight > 1 ? 1 : maxInput.weight;
 
-		neuron.learn = maxInput.input.learning * maxInput.input.value;
+		neuron.learn = maxInput.input.learning;
 	}
 }
