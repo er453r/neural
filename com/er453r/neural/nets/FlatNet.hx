@@ -30,7 +30,7 @@ class FlatNet implements Network {
 			neurons[n] = new Neuron([
 				new WTA(),
 				new Decay(0.000001),
-				new PositiveWeights(),
+				new PositiveWeights(0.1),
 				new ReinforcementWTALearning()
 			]);
 
