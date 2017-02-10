@@ -2,6 +2,7 @@ package com.er453r.neural.mutators;
 
 class LearningWTA extends NeuronMutator{
 	private var treshold:Float;
+	private var momentum:Float = 0.9;
 
 	public function new(treshold:Float = 0.000001){
 		this.treshold = treshold;
@@ -21,8 +22,8 @@ class LearningWTA extends NeuronMutator{
 			}
 		}
 
-		maxInput.weight += neuron.learning * neuron.value;
-
+		maxInput.dw = momentum * maxInput.dw + neuron.learning * neuron.value;
+		maxInput.weight += maxInput.dw;
 		maxInput.weight = maxInput.weight > 1 ? 1 : maxInput.weight;
 
 		// learing signal propagation
