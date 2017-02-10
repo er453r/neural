@@ -30,8 +30,8 @@ class FlatNet implements Network {
 			neurons[n] = new Neuron([
 				new WTA(),
 				new Decay(0.000001),
-				new PositiveWeights(0.1),
-				new ReinforcementWTALearning()
+				new PositiveWeights(1),
+				new LearningWTA()
 			]);
 
 		for(n in 0...neurons.length){
@@ -78,7 +78,7 @@ class FlatNet implements Network {
 		var outputIndex:UInt = Std.int(height / 2) * width + Std.int(3 * width / 4);
 
 		neurons[inputIndex].value = 1;
-		neurons[inputIndex].learning = neurons[outputIndex].value;
+		neurons[outputIndex].learning = 1;
 
 		for(neuron in neurons)
 			neuron.step();
@@ -87,6 +87,6 @@ class FlatNet implements Network {
 			neuron.propagate();
 
 		neurons[inputIndex].value = 1;
-		neurons[inputIndex].learning = neurons[outputIndex].value;
+		neurons[outputIndex].learning = 1;
 	}
 }
