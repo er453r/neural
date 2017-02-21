@@ -4,7 +4,7 @@ class Decay extends NeuronMutator{
 	private var treshold:Float;
 	private var decay:Float;
 
-	public function new(treshold:Float = 0.01, decay:Float = 0.9){
+	public function new(treshold:Float = 0.00001, decay:Float = 0.9){
 		this.treshold = treshold;
 		this.decay = decay;
 	}
