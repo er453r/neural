@@ -28,9 +28,25 @@ class LearningWTA extends NeuronMutator{
 		// the neuron is learning AND
 		// the neuron is active
 		maxSynapse.dw = momentum * maxSynapse.dw + neuron.learning * neuron.value;
-		maxSynapse.weight += maxSynapse.dw;
-		maxSynapse.weight = maxSynapse.weight > 1 ? 1 : maxSynapse.weight;
-		maxSynapse.weight *= 0.9998;
+		//maxSynapse.weight += maxSynapse.dw;
+	//	maxSynapse.weight = maxSynapse.weight > 1 ? 1 : maxSynapse.weight;
+	//	maxSynapse.weight *= 0.9998;
+
+		// learing signal propagation
+		max = 0;
+		maxSynapse = neuron.outputs[0];
+
+		// we find the input withe biggest share
+		for(input in neuron.inputs){
+			var value:Float = input.input.value;
+
+			if(max < value){
+				max = value;
+				maxSynapse = input;
+			}
+		}
+
+		maxSynapse.learn = 1 * max;
 
 		// learing signal propagation
 		max = 0;
@@ -38,7 +54,7 @@ class LearningWTA extends NeuronMutator{
 
 		// we find the output withe biggest learning factor
 		for(output in neuron.outputs){
-			var value:Float = output.output.learning * output.weight;
+			var value:Float = output.output.learning * output.learn;
 
 			if(max < value){
 				max = value;
@@ -51,8 +67,8 @@ class LearningWTA extends NeuronMutator{
 		// our output is learning
 		// (we do not check if output has activity,
 		// since we already check for out activity)
-		dl = momentum * dl + 0.1 * max;// * neuron.value;
-		neuron.learn = dl;
-		neuron.learn = neuron.learn > 1 ? 1 : neuron.learn;
+		dl = momentum * dl + 1 * max;// * neuron.value;
+		neuron.learn += dl;
+		neuron.learn = neuron.learn > 0 ? 1 : neuron.learn;
 	}
 }
