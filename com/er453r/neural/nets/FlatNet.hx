@@ -1,26 +1,16 @@
 package com.er453r.neural.nets;
 
-import com.er453r.neural.mutators.FixedWeights;
-import com.er453r.neural.mutators.ReinforcementWTALearning;
 import haxe.Timer;
-import com.er453r.neural.mutators.LearningWTA;
-import com.er453r.neural.mutators.Decay;
-import com.er453r.neural.mutators.PositiveWeights;
 import haxe.ds.Vector;
-
-import com.er453r.neural.mutators.WTA;
 
 class FlatNet implements Network {
 	private var neurons:Vector<Neuron>;
 
 	private var width:Int;
 	private var height:Int;
-
 	private var d:Int = 1;
 
-	private var iter:Int = 0;
-
-	public function new(width:Int, height:Int, d:Int = 1) {
+	public function new(width:Int, height:Int, d:Int = 1, getNeuron:Void->Neuron) {
 		this.width = width;
 		this.height = height;
 		this.d = d;
@@ -30,12 +20,7 @@ class FlatNet implements Network {
 		neurons = new Vector<Neuron>(width * height);
 
 		for(n in 0...neurons.length)
-			neurons[n] = new Neuron([
-				new WTA(),
-				new Decay(0.01, 0.9),
-				new PositiveWeights(0.5),
-				new LearningWTA()
-			]);
+			neurons[n] = getNeuron();
 
 		for(n in 0...neurons.length){
 			var neuron:Neuron = neurons[n];
@@ -77,25 +62,10 @@ class FlatNet implements Network {
 	}
 
 	public function update():Void{
-		var inputIndex:UInt = Std.int(height / 2) * width + Std.int(width / 4);
-		var outputIndex:UInt = Std.int(height / 2) * width + Std.int(3 * width / 4);
-
-		if(iter > 5)
-			neurons[inputIndex].value = 1;
-		neurons[outputIndex].learning = 1;
-		neurons[inputIndex].learning = 0;
-
 		for(neuron in neurons)
 			neuron.step();
 
 		for(neuron in neurons)
 			neuron.propagate();
-
-		if(iter > 4)
-			neurons[inputIndex].value = 1;
-		neurons[outputIndex].learning = 1;
-		neurons[inputIndex].learning = 0;
-
-		iter++;
 	}
 }
